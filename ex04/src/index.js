@@ -1,21 +1,29 @@
-function sumFibonacci(num, total = [1, 1]) {
-    const n = total[total.length - 1] + total[total.length - 2];
+function sumFibonacci(num) {
+    if (num <= 0) {
+        return 0;
+    }
+    if (num === 1) {
+        return 1;
+    }
+    var sum = 0;
 
-    if (n > num) {
-        var answer = total
-            .filter((item) => {
-                return item % 2 != 0;
-            })
-            .reduce((totalII, filteredItems) => {
-                return totalII + filteredItems;
-            }, 0);
-
-        return answer;
+    function fib(counter) {
+        if (counter === 2) {
+            return [1, 1];
+        } else {
+            const countArray = fib(counter - 1);
+            countArray.push(countArray[countArray.length - 2] + countArray[countArray.length - 1]);
+            return countArray;
+        }
     }
 
-    total.push(n);
-
-    return sumFibonacci(num, total);
+    var fibArray = fib(num);
+    for (var i = 0; fibArray[i] <= num; i++) {
+        if (fibArray[i] % 2 !== 0) {
+            sum += fibArray[i];
+        }
+    }
+    return sum;
 }
 
 console.log(sumFibonacci(1));
